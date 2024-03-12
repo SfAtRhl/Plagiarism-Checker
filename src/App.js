@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+import SweetAlert from "./sweetalert";
 
 const App = () => {
   const [file1, setFile1] = useState(null);
@@ -76,21 +79,8 @@ const App = () => {
       </motion.button>
 
       {similarityResults && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-6"
-        >
-          <h2 className="text-2xl font-bold mb-2">Similarity Results:</h2>
-          <ul>
-            {similarityResults.map((result, index) => (
-              <li key={index} className="mb-2 text-lg">
-                {result.document1} and {result.document2}: Similarity Score -{" "}
-                {result.similarity_score.toFixed(2)}
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+       
+        <SweetAlert similarityResults={similarityResults} />
       )}
     </div>
   );

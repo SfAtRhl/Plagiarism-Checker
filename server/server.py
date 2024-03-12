@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,render_template
 from flask_cors import CORS 
 import os
 import PyPDF2
@@ -8,6 +8,7 @@ from arango import ArangoClient
 
 app = Flask(__name__)
 CORS(app)
+
 
 # Initialize ArangoDB connection
 client = ArangoClient()
@@ -53,6 +54,10 @@ def check_plagiarism(text_vector_a, text_vector_b, student_a, student_b):
         'similarity_score': sim_score
     }
     return result
+
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 
 @app.route('/upload', methods=['POST'])
