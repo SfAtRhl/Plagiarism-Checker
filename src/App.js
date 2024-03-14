@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 import SweetAlert from "./sweetalert";
+import Cover from "./cover";
 
 const App = () => {
   const [file1, setFile1] = useState(null);
   const [file2, setFile2] = useState(null);
+  const [error, setError] = useState(false);
   const [similarityResults, setSimilarityResults] = useState(null);
 
   const handleFile1Change = (e) => {
@@ -20,6 +21,11 @@ const App = () => {
 
   const handleUpload = async () => {
     const formData = new FormData();
+    if (!file2 || !file1) {
+      setError(true);
+    } else {
+      setError(false);
+    }
     formData.append("file", file1);
     formData.append("file", file2);
 
@@ -41,6 +47,7 @@ const App = () => {
 
   return (
     <div className="container mx-auto p-4 flex flex-col justify-center items-center text-white h-screen ">
+      <Cover />
       <h1 className="text-4xl font-bold mb-3 text-center">
         Plagiarism Checker
       </h1>
@@ -65,22 +72,32 @@ const App = () => {
             type="file"
             onChange={handleFile2Change}
             className="file-input"
+            required
           />
         </div>
       </div>
 
       <motion.button
-        whileHover={{ scale: 1.04 }}
+        whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleUpload}
-        className="bg-gray-500 text-white px-4 py-2 rounded mt-4"
+        className="bg-gray-500 text-white px-4 py-2 rounded mt-4 text-base"
       >
         Check Plagiarism
       </motion.button>
 
       {similarityResults && (
-       
         <SweetAlert similarityResults={similarityResults} />
+      )}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className=" text-red-400 py-4 text-base font-medium"
+        >
+          something went wrong :()
+        </motion.div>
       )}
     </div>
   );
