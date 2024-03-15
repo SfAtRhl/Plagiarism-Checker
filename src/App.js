@@ -45,6 +45,20 @@ const App = () => {
     }
   };
 
+  const bounceTransition = {
+    y: {
+      duration: 0.4,
+      yoyo: Infinity,
+      ease: "easeOut",
+    },
+    backgroundColor: {
+      duration: 0,
+      yoyo: Infinity,
+      ease: "easeOut",
+      repeatDelay: 0.8,
+    },
+  };
+
   return (
     <div className="container mx-auto p-4 flex flex-col justify-center items-center text-white h-screen ">
       <Cover />
@@ -85,7 +99,14 @@ const App = () => {
       >
         Check Plagiarism
       </motion.button>
-
+      <motion.div
+        className=" w-full text-center  absolute bottom-8 font-medium"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      >
+        This Simple Plagiarism Checker can take only .txt or .pdf files
+      </motion.div>
       {similarityResults && (
         <SweetAlert similarityResults={similarityResults} />
       )}
@@ -94,7 +115,7 @@ const App = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className=" text-red-400 py-4 text-base font-medium"
+          className=" text-red-400 py-4 text-base font-medium absolute bottom-24"
         >
           something went wrong :()
         </motion.div>

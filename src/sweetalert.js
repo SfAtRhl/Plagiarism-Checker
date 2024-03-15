@@ -11,14 +11,16 @@ const SweetAlert = ({ similarityResults }) => {
     ) {
       Swal.fire({
         icon:
-          similarityResults[0].similarity_score.toFixed(2) < 0.5
+          similarityResults[0].similarity_score.toFixed(2) > 0.5
             ? "error"
             : "success",
         title:
-          similarityResults[0].similarity_score.toFixed(2) < 0.5
-            ? "Oops..."
-            : "Ok",
-        text: similarityResults[0].similarity_score.toFixed(2) * 100 + "%",
+          similarityResults[0].similarity_score.toFixed(2) > 0.5
+            ? "Oops... Similarity Score"
+            : "Ok, Similarity Score",
+        text:
+          Math.floor(similarityResults[0].similarity_score.toFixed(2) * 100) +
+          "%",
         customClass: {
           popup: "dark-mode",
           header: "dark-mode",

@@ -15,6 +15,10 @@ export default function Cover() {
       loaded={particlesLoaded}
       options={{
         fpsLimit: 120,
+        fullScreen: {
+          enable: true,
+          zIndex: -1,
+        },
         interactivity: {
           events: {
             onClick: {

@@ -48,9 +48,7 @@ def check_plagiarism(text_vector_a, text_vector_b, student_a, student_b):
 
     result = {
         'document1': student_a,
-        # 'content1': text_vector_a,
         'document2': student_b,
-        # 'content2': text_vector_b,
         'similarity_score': sim_score
     }
     return result
@@ -64,18 +62,24 @@ def home():
 def upload_files():
     uploaded_files = request.files.getlist('file')
     uploaded_texts = []
+    docs = []
+
 
     for file in uploaded_files:
         if file.filename.endswith('.pdf'):
             content = extract_text_from_pdf(file)
         else:
             content = file.read().decode('utf-8')
+        doc = {
+            'filename': file.filename,
+            'content': content
+        }
         uploaded_texts.append(content)
+        docs.append(docs)
 
     vectors = vectorize(uploaded_texts)
     s_vectors = list(zip(uploaded_files, vectors))
 
-    # print(uploaded_texts)
 
     plagiarism_results = []
 
@@ -88,9 +92,9 @@ def upload_files():
             plagiarism_results.append(result)
 
             # Store the results in ArangoDB collection
-            print(plagiarism_results[0])
-            db[collection_name].insert(plagiarism_results[:1])
-    return jsonify({'plagiarism_results': plagiarism_results})
+            db[collection_name].insert(plagiarism_results[0])
+            
+    return jsonify({'plagiarism_results': plagiarism_results[0]})
 
 if __name__ == '__main__':
     app.run(debug=True)
