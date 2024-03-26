@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: ./   # Path to the directory containing your Flask application Dockerfile
+    ports:
+      - "5000:5000"    # Map container port 5000 to host port 5000
+    depends_on:
+      - arangodb       # Depend on the ArangoDB service
+
+  arangodb:
+    image: arangodb/arangodb:3.7.14  # Official ArangoDB image
+    environment:
+      ARANGO_ROOT_PASSWORD: root  # Set the root password for ArangoDB
+    ports:
+      - "8529:8529"  # Map container port 8529 to host port 8529
+    volumes:
+      - arangodata:/var/lib/arangodb3  # Mount a volume for persistent data storage
+
+volumes:
+  arangodata:

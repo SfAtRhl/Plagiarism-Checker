@@ -94,7 +94,7 @@ def upload_files():
             # Store the results in ArangoDB collection
             db[collection_name].insert(plagiarism_results[0])
             
-    return jsonify({'plagiarism_results': plagiarism_results[0]})
+    return jsonify({'plagiarism_results': plagiarism_results})
 
 if __name__ == '__main__':
     app.run(debug=True)

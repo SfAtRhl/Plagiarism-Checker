@@ -45,20 +45,6 @@ const App = () => {
     }
   };
 
-  const bounceTransition = {
-    y: {
-      duration: 0.4,
-      yoyo: Infinity,
-      ease: "easeOut",
-    },
-    backgroundColor: {
-      duration: 0,
-      yoyo: Infinity,
-      ease: "easeOut",
-      repeatDelay: 0.8,
-    },
-  };
-
   return (
     <div className="container mx-auto p-4 flex flex-col justify-center items-center text-white h-screen ">
       <Cover />
